@@ -1,0 +1,6 @@
+#!/bin/sh
+
+setxkbmap -layout us -option ctrl:nocaps
+#gksu -- xmodmap -e 'remove Lock = Caps_Lock'
+#gksu -- xmodmap -e 'keysym Alt_R = Control_L'
+#gksu -- xmodmap -e 'add Control = Control_L'

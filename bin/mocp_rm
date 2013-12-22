@@ -1,0 +1,22 @@
+#!/usr/bin/python
+import os
+import subprocess
+import sys
+
+def main():
+    filepath = sys.argv[1]
+    if not os.path.isfile(filepath):
+        return
+    try:
+        retval = subprocess.call(["dialog", "--defaultno", "--yesno",
+                                  "Hapus \'%s\'" % os.path.basename(filepath),
+                                  "100", "100"])
+        if retval == 0:
+            # subprocess.call(["dialog", "--msgbox", "Menghapus %s" % filepath,
+            #                  "100", "100"])
+            print('Deleting "%s"' % filepath)
+            os.remove(filepath)
+    except KeyboardInterrupt:
+        pass
+
+main()

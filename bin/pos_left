@@ -1,0 +1,4 @@
+#!/bin/sh
+
+wmctrl -r :ACTIVE: -e 0,0,0,505,750
+xdotool mousemove 20 100

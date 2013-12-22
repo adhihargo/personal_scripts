@@ -1,0 +1,5 @@
+#!/bin/sh
+
+wmctrl -r :ACTIVE: -b remove,maximized_horz,maximized_vert 
+wmctrl -r :ACTIVE: -e 0,640,0,639,750
+xdotool mousemove 660 100
