@@ -1,0 +1,48 @@
+(begin
+
+  (debug)
+
+  (if
+   (or (is (window_class) "Acroread")
+       (is (window_class) "Epdfview")
+       (is (window_class) "Evince")
+       (is (window_class) "Djview4"))
+   (begin
+     (set_workspace 2)
+     (maximize)))
+
+  (if
+   (contains (window_class) "Gimp")
+   (set_workspace 3))
+
+  (if
+   (is (window_class) "Inkscape")
+   (begin
+     (maximize)
+     (set_workspace 3)))
+
+  (if
+   (or (is (window_class) "Eog")
+       (is (window_class) "Google-chrome")
+       (is (application_name) "Firefox"))
+   (geometry "775x750+506+0"))
+
+  (if
+   (or
+    (is (window_class) "Gnome-terminal")
+    (is (window_class) "processing-app-Base")
+    )
+   
+   (geometry "505x750+0+0"))
+
+  (if
+   (is (application_name) "Blender")
+   (maximize)) 
+
+)
+
+;; -
+;; Local Variables:
+;; mode: scheme
+;; End:
+;; -

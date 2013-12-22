@@ -1,0 +1,104 @@
+# GIMP sessionrc
+# 
+# This file takes session-specific info (that is info, you want to keep
+# between two GIMP sessions).  You are not supposed to edit it manually, but
+# of course you can do.  The sessionrc will be entirely rewritten every time
+# you quit GIMP.  If this file isn't found, defaults are used.
+
+(session-info "dock" "dock"
+    (position 1028 0)
+    (size 250 10)
+    (open-on-exit)
+    (aux-info
+        (show-image-menu "false")
+        (follow-active-image "true"))
+    (dock
+        (book
+            (current-page 0)
+            (dockable "gimp-color-editor"
+                (locked)
+                (tab-style preview)
+                (aux-info
+                    (current-page "ColorselWheel")))
+            (dockable "gimp-color-editor"
+                (locked)
+                (tab-style preview)
+                (aux-info
+                    (current-page "GimpColorSelectorPalette")))
+            (dockable "gimp-palette-list"
+                (locked)
+                (tab-style preview))
+            (dockable "gimp-brush-grid"
+                (locked)
+                (tab-style preview))
+            (dockable "gimp-pattern-grid"
+                (locked)
+                (tab-style preview))
+            (dockable "gimp-gradient-list"
+                (locked)
+                (tab-style preview)))
+        (book
+            (position 297)
+            (current-page 0)
+            (dockable "gimp-tool-options"
+                (locked)
+                (tab-style icon-name))
+            (dockable "gimp-navigation-view"
+                (locked)
+                (tab-style icon-name)))
+        (book
+            (position 567)
+            (current-page 0)
+            (dockable "gimp-layer-list"
+                (locked)
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-channel-list"
+                (locked)
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-vectors-list"
+                (locked)
+                (tab-style icon)
+                (preview-size 32))
+            (dockable "gimp-undo-history"
+                (locked)
+                (tab-style icon))
+            (dockable "gimp-selection-editor"
+                (locked)
+                (tab-style icon))
+            (dockable "gimp-histogram-editor"
+                (locked)
+                (tab-style icon))
+            (dockable "gimp-sample-point-editor"
+                (locked)
+                (tab-style icon))
+            (dockable "gimp-template-list"
+                (locked)
+                (tab-style preview)))))
+(session-info "toolbox" "dock"
+    (position 0 0)
+    (size 68 723)
+    (open-on-exit))
+(session-info "toplevel" "gimp-preferences-dialog"
+    (position 0 0))
+(session-info "toplevel" "gimp-image-new-dialog"
+    (position 0 0))
+(session-info "toplevel" "gimp-file-open-dialog"
+    (position 0 0)
+    (size 890 743))
+(session-info "toplevel" "gimp-toolbox-color-dialog"
+    (position 0 0))
+(session-info "toplevel" "gimp-file-save-dialog"
+    (position 0 0)
+    (size 890 743))
+(session-info "toplevel" "gimp-text-tool-dialog"
+    (position 760 0)
+    (size 204 201))
+(session-info "display" "gimp-empty-image-window"
+    (position 70 0)
+    (size 958 744))
+
+(last-tip-shown 29)
+
+# end of sessionrc
