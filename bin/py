@@ -1,0 +1,3 @@
+#!/bin/sh
+
+env PYTHONSTARTUP=$HOME/bin/python3_init python3
