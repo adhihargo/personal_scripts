@@ -1,0 +1,4 @@
+xdotool getactivewindow windowkill
+emacs23-x -fn "Envy Code R 9" -fh
+gnome-screenshot -wB -d 2
+dmenu_run -i -nb red -nf white
