@@ -61,7 +61,7 @@ Prebuffering		= 64
 # Sound driver - OSS, ALSA, JACK, or null (only for debugging).
 # You can enter more than one driver separated by a comma. The first working
 # driver will be used.
-SoundDriver		= ALSA, OSS, JACK
+SoundDriver		= ALSA:OSS:JACK
 
 # Jack output settings.
 JackOutLeft		= "alsa_pcm:playback_1"
@@ -74,13 +74,13 @@ OSSDevice		= /dev/dsp
 OSSMixerDevice		= /dev/mixer
 
 # OSS Mixer channel: pcm or master.
-OSSMixerChannel		= pcm
+OSSMixerChannel1	= pcm
 
 # Second OSS Mixer channel: pcm or master.
 OSSMixerChannel2	= master
 
 # ALSA mixer device.
-AlsaMixer 		= PCM
+ALSAMixer1 		= PCM
 
 # Second ALSA mixer device.
 AlsaMixer2		= Master
@@ -164,7 +164,7 @@ SyncPlaylist		= yes
 
 # Choose a keymap file (relative to ~/.moc/ or absolute path).
 # Example keymap with description is included (keymap.example).
-Keymap			= keymap
+# Keymap			= keymap
 
 # Use ASCII characters instead of graphic for drawing lines. This helps on
 # some terminals.
@@ -268,7 +268,7 @@ PlaylistNumbering	= no
 # Layout3		= ""
 
 # Layout1 = "playlist:0,0,100%,5 directory:0,10,100%,FILL"
-Layout1 = "playlist:0,0,100%,10"
+Layout1 = playlist(0,0,100%,10)
 
 # When the song changes, should the menu be scrolled so that the currently
 # played file is visible?
