@@ -1,28 +1,8 @@
 ;; (make-frame-invisible (selected-frame) t)
-(defvar emacs-home-path "/media/D_PROGRAM/home/")
+(defvar emacs-home-path "/media/tpd1/home/")
 (defvar emacs-site-lisp-path
   (expand-file-name "site-lisp/" emacs-home-path))
-(defvar emacs-site-lisp-subdirs
-  (let ((dirlist
-	 (mapcar (lambda (x) (expand-file-name x emacs-site-lisp-path))
-		 '(
-		   "auctex-11.84/preview/"
-		   "muse-3.20/lisp/"
-		   "muse-3.20/contrib/"
-		   "doxymacs-1.8.0/no-autoconf/"
-		   "mmm-mode-0.4.8"
-                   "php-mode-1.4.0"
-		   ))
-	 ))
-    (mapc (lambda (x)
-	    (when (file-directory-p x) (push x dirlist)))
-	  (directory-files emacs-site-lisp-path t))
-    dirlist))
-(setq
- load-path (append (list emacs-site-lisp-path)
-                   load-path		   
-		   emacs-site-lisp-subdirs
-		   ))
+(add-to-list 'load-path emacs-site-lisp-path)
 
 (defun tataletak-jendela-personal ()
   (interactive)
@@ -30,8 +10,7 @@
   (tool-bar-mode 0)
   (set-face-attribute 'default nil
   		      :background "black" :foreground "white")
-  (column-number-mode 1)
-  )
+  (column-number-mode 1))
 
 (load "adh.el" t t t)
 (setq user-mail-address "cadmus.sw at gmail.com")
