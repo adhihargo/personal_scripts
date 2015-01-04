@@ -76,6 +76,13 @@
 	    (TeX-fold-mode 1)
 	    (font-lock-mode '())))
 
+;; ============================ Autocomplete ============================
+(defvar auto-complete-path
+  (expand-file-name "auto-complete-1.3.1/" emacs-site-lisp-path))
+(add-to-list 'load-path auto-complete-path) 
+(require 'auto-complete-config)
+(ac-config-default)
+
 ;; =============================== BBCode ===============================
 (autoload 'xbbcode-mode "xbbcode-mode" nil t)
 
@@ -151,6 +158,10 @@
 ;; ================================= Git ================================
 (autoload 'magit-status "magit" nil t)
 
+;; ================================= Ido ================================
+(setq ido-separator "\n") ;;; make ido display choices vertically
+(setq ido-enable-flex-matching t) ;;; display any item that contains the chars you typed
+
 ;; ================================= Lua ================================
 (autoload 'lua-mode "lua-mode" nil t)
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
@@ -174,13 +185,26 @@
 (autoload 'protobuf-mode "protobuf-mode" nil t)
 
 ;; =============================== Python ===============================
-;; pymacs
-;; (autoload 'pymacs-load "pymacs" nil t)
-;; (autoload 'pymacs-eval "pymacs" nil t)
-;; (autoload 'pymacs-apply "pymacs")
-;; (autoload 'pymacs-call "pymacs")
-;; bicyclerepair
-;; (pymacs-load "bikeemacs" "brm-")
+(defvar python-mode-path
+  (expand-file-name "python-mode.el-6.2.0/" emacs-site-lisp-path))
+(add-to-list 'load-path python-mode-path) 
+(setq py-install-directory python-mode-path)
+(require 'python-mode)
+
+; use IPython
+(setq-default py-shell-name "ipython3")
+(setq-default py-which-bufname "IPython")
+(setq py-python-command-args
+  '("qtconsole" "--colors=Linux"))
+(setq py-force-py-shell-name-p t)
+
+; switch to the interpreter after executing code
+(setq py-shell-switch-buffers-on-execute-p t)
+(setq py-switch-buffers-on-execute-p t)
+; don't split windows
+(setq py-split-windows-on-execute-p nil)
+; try to automagically figure out indentation
+(setq py-smart-indentation t)
 
 ;; ===================== Scheme... Everything Scheme ====================
 (load "quack.el" t t t)
