@@ -1,5 +1,6 @@
 ;; (make-frame-invisible (selected-frame) t)
-(defvar emacs-home-path "/media/tpd1/home/")
+;; (defvar emacs-home-path "/media/tpd1/home/")
+;; (load (expand-file-name ".emacs" emacs-home-path) t)
 (defvar emacs-site-lisp-path
   (expand-file-name "site-lisp/" emacs-home-path))
 (add-to-list 'load-path emacs-site-lisp-path)
@@ -24,32 +25,25 @@
 (define-key global-map (kbd "<f8>") 'compile)
 (setq compilation-window-height 12)
 
+(add-hook 'window-setup-hook
+	  'tataletak-jendela-personal)
+
+(global-set-key (kbd "M-n") 'woman)
+
 ;; ---------------------- Registrasi ekstensi file ----------------------
 (setq auto-mode-alist
       (append
        '(
-	 ;; ("\\.\\(cmd\\|bat\\)$" . cmd-mode)
-	 ("\\.antlr$" . antlr-mode)
-	 ;; ("\\.as$" . actionscript-mode)
-	 ;; ("\\.asm$" . nasm-mode)
-	 ;; ("\\.cs$" . csharp-mode)
-	 ("\\.f$" . forth-mode)
-	 ("\\.grid$" . conf-windows-mode)
 	 ("\\.go$" . go-mode)
-	 ;; ("\\.h\\(i\\|sc?\\)$" . haskell-mode)
 	 ("\\.html$" . nxml-mode)
 	 ("\\.hx$" . haxe-mode)
 	 ("\\.ina$" . sh-mode)
-	 ;; ("\\.js$" . javascript-mode)
-	 ;; ("\\.lhs$" . literate-haskell-mode)
 	 ("\\.lua$" . lua-mode)
-	 ;; ("\\.ml[iylp]?$" . tuareg-mode)
 	 ("\\.md$" . markdown-mode)
 	 ("\\.muse$" . muse-mode)
 	 ;; ("\\.pde$" . processing-mode)
 	 ("\\.proto$" . protobuf-mode)
 	 ("\\.\\(php\\|x\\)bb$" . xbbcode-mode)
-	 ;; ("\\.pov$" . pov-mode)
 	 ("\\.pro$" . conf-unix-mode)
 	 ("\\.pyw?$" . python-mode)
 	 ("\\.rbw?$" . ruby-mode)
@@ -59,11 +53,6 @@
 	 )
        auto-mode-alist))
 ;; (add-to-list 'auto-mode-alist '("\\.pro$" . conf-unix-mode))
-
-(add-hook 'window-setup-hook
-	  'tataletak-jendela-personal)
-
-(global-set-key (kbd "M-n") 'woman)
 
 ;; =============================== AucTeX ===============================
 (setq TeX-parse-self t)
@@ -107,14 +96,6 @@
 	  (lambda ()
 	    (c-set-style "gnu")))
 
-;; ================================ CEDET ===============================
-;; (semantic-add-system-include 
-;;  "/usr/include/qt4" 'c++-mode)
-;; (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-;; 	     "/usr/include/qt4/Qt/qconfig.h")
-;; (add-to-list 'semantic-lex-c-preprocessor-symbol-file
-;; 	     "/usr/include/qt4/Qt/qconfig-dist.h")
-
 ;; ================================ CMake ===============================
 (autoload 'cmake-mode "cmake-mode" nil t)
 
@@ -145,12 +126,25 @@
 (setq
  dired-guess-shell-alist-user
  (list
+  '("\\.pyw?$" "python2" "python3")
+  '("\\.ui$" "designer" "designer-qt4")
   '(
     "\\.pdf$"
     (concat
      "gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sPAPERSIZE=a4"
      " -sOutputFile=\"" (file-name-sans-extension file) "-.pdf\""))
   ))
+
+;; =============================== CC Mode ==============================
+(add-hook 'c-mode-hook
+	  (lambda ()
+	    (c-set-style "gnu")))
+(add-hook 'c++-mode-hook
+	  (lambda ()
+	    (c-set-style "gnu")))
+(add-hook 'java-mode-hook
+	  (lambda ()
+	    (c-set-style "gnu")))
 
 ;; =============================== Doxygen ==============================
 (autoload 'doxymacs-mode "doxymacs" nil t)
@@ -162,6 +156,7 @@
 ;; ================================= Ido ================================
 (setq ido-separator "\n") ;;; make ido display choices vertically
 (setq ido-enable-flex-matching t) ;;; display any item that contains the chars you typed
+(ido-mode 1)
 
 ;; ================================= Lua ================================
 (autoload 'lua-mode "lua-mode" nil t)
@@ -192,11 +187,7 @@
 (setq py-install-directory python-mode-path)
 (require 'python-mode)
 
-; use IPython
-(setq-default py-shell-name "ipython3")
-(setq-default py-which-bufname "IPython")
-(setq py-ipython-command "ipython3")
-(setq py-ipython-command-args '("--colors=Linux"))
+(add-to-list 'completion-ignored-extensions ".pyc" t)
 
 ; don't split window without my consent
 (setq py-keep-windows-configuration t)
@@ -240,7 +231,7 @@
  '(compilation-auto-jump-to-first-error t)
  '(compilation-disable-input t)
  '(compilation-scroll-output (quote first-error))
- '(compilation-skip-visited t)
+ '(compilation-skip-visited nil)
  '(debug-on-error nil)
  '(display-buffer-reuse-frames t)
  '(doc-view-ghostscript-options (quote ("-dSAFER" "-dNOPAUSE" "-sDEVICE=png16m" "-dTextAlphaBits=4" "-dBATCH" "-dGraphicsAlphaBits=4" "-dQUIET" "-dUseCropBox")))
@@ -259,11 +250,11 @@
  '(scroll-bar-mode nil)
  '(uniquify-buffer-name-style (quote reverse) nil (uniquify)))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 90 :width normal :foundry "unknown" :family "Envy Code R"))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "Envy Code R"))))
  '(cursor ((t (:background "white"))))
  '(fringe ((((class color) (background dark)) (:background "grey80" :foreground "black"))))
  '(mmm-code-submode-face ((t nil)))
