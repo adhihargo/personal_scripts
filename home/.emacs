@@ -82,6 +82,7 @@
 (add-to-list 'load-path auto-complete-path) 
 (require 'auto-complete-config)
 (ac-config-default)
+(define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
 
 ;; =============================== BBCode ===============================
 (autoload 'xbbcode-mode "xbbcode-mode" nil t)
