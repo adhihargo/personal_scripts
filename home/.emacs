@@ -194,17 +194,19 @@
 ; use IPython
 (setq-default py-shell-name "ipython3")
 (setq-default py-which-bufname "IPython")
-(setq py-python-command-args
-  '("qtconsole" "--colors=Linux"))
-(setq py-force-py-shell-name-p t)
+(setq py-ipython-command "ipython3")
+(setq py-ipython-command-args '("--colors=Linux"))
 
-; switch to the interpreter after executing code
-(setq py-shell-switch-buffers-on-execute-p t)
-(setq py-switch-buffers-on-execute-p t)
-; don't split windows
-(setq py-split-windows-on-execute-p nil)
+; don't split window without my consent
+(setq py-keep-windows-configuration t)
 ; try to automagically figure out indentation
 (setq py-smart-indentation t)
+
+; refactoring tool for 2.x
+(setq ropemacs-enable-shortcuts nil) 
+(setq ropemacs-local-prefix "C-c C-p")
+(require 'pymacs)
+(pymacs-load "ropemacs" "rope-")
 
 ;; ===================== Scheme... Everything Scheme ====================
 (load "quack.el" t t t)
