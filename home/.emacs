@@ -10,7 +10,7 @@
   (menu-bar-mode 0)
   (tool-bar-mode 0)
   (set-face-attribute 'default nil
-  		      :background "black" :foreground "white")
+                      :background "black" :foreground "white")
   (column-number-mode 1))
 
 (load "adh.el" t t t)
@@ -18,19 +18,21 @@
 (setq user-full-name "Adhi Hargo")
 (add-hook 'write-file-hooks 'time-stamp)
 
-(setq x-select-enable-clipboard t)
-(setq interprogram-paste-function 'x-cut-buffer-or-selection-value)
+(setq backup-by-copying t)
+(setq w32-get-true-file-attributes nil)
 
 (setq make-backup-files nil)
 (define-key global-map (kbd "<f8>") 'compile)
+(define-key global-map (kbd "<f9>") 'recompile)
+(define-key global-map (kbd "C-x C-b") 'buffer-menu)
 (setq compilation-window-height 12)
 
 (add-hook 'window-setup-hook
-	  'tataletak-jendela-personal)
+          'tataletak-jendela-personal)
 
 (global-set-key (kbd "M-n") 'woman)
 
-;; ---------------------- Registrasi ekstensi file ----------------------
+;====================== Registrasi ekstensi file =====================
 (setq auto-mode-alist
       (append
        '(
@@ -54,7 +56,15 @@
        auto-mode-alist))
 ;; (add-to-list 'auto-mode-alist '("\\.pro$" . conf-unix-mode))
 
-;; =============================== AucTeX ===============================
+;============================== Packages =============================
+;; Keep above all other packages
+(require 'package)
+(setq package-archives '(("melpa" . "http://melpa.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
+;=============================== AucTeX ==============================
 (setq TeX-parse-self t)
 (setq-default TeX-master nil)
 (add-hook 'LaTeX-mode-hook
@@ -65,7 +75,7 @@
 	    (TeX-fold-mode 1)
 	    (font-lock-mode '())))
 
-;; ============================ Autocomplete ============================
+;============================ Autocomplete ===========================
 (defvar auto-complete-path
   (expand-file-name "auto-complete-1.3.1/" emacs-site-lisp-path))
 (add-to-list 'load-path auto-complete-path) 
@@ -73,10 +83,10 @@
 (ac-config-default)
 (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
 
-;; =============================== BBCode ===============================
+;=============================== BBCode ==============================
 (autoload 'xbbcode-mode "xbbcode-mode" nil t)
 
-;; ============================== Bookmarks =============================
+;============================= Bookmarks =============================
 (autoload 'bm-toggle "bm.el" nil t)
 (global-set-key (kbd "<C-f2>") 'bm-toggle)
 (global-set-key (kbd "<f2>")   'bm-next)
@@ -85,43 +95,45 @@
 (global-set-key (kbd "<left-fringe> <mouse-4>") 'bm-previous-mouse)
 (global-set-key (kbd "<left-fringe> <mouse-1>") 'bm-toggle-mouse)
 
-;; =============================== CC Mode ==============================
+;============================== CC Mode ==============================
 (add-hook 'c-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 (add-hook 'c++-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 (add-hook 'java-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 
-;; ================================ CMake ===============================
+;=============================== CMake ===============================
 (autoload 'cmake-mode "cmake-mode" nil t)
 
-;; ================================ Dired ===============================
+;=============================== Dired ===============================
 (add-hook 'dired-mode-hook
-	  (lambda ()
-	    (dired-omit-mode 1)))
+          (lambda ()
+            (dired-omit-mode 1)))
+(add-hook 'dired-mode-hook 'auto-revert-mode)
+(add-hook 'dired-mode-hook 'dired-hide-details-mode)
 (add-hook 'dired-load-hook
-	  (lambda ()
-	    (load "dired-x")
-	    (setq
-	     dired-listing-switches "--group-directories-first -lhagG"
-	     dired-omit-files
-	     (concat
-	      "^\\.?#\\|^\\.$\\|^\\.\\.$"
-	      "\\|^Makefile\\(\\.am\\|\\.in\\)?$" ; automake
-	      "\\|^configure\\(\\.ac\\|\\.in\\)?" ; autoconf
-	      "\\|^missing$\\|^aclocal\\.m4$"	  ; aclocal
-	      "\\|^depcomp$\\|^install-sh$"
-	      "\\|^autom4te\\.cache$"
-	      "\\|^config\\.\\(status\\|log\\|h\\.in\\)$"
-	      "\\|^stamp-h1$"
-	      "\\|\\.fasl$"		; common lisp
-	      "\\|\\.cm.+$"		; ocaml
-	      "\\|^\\."
-	      ))))
+          (lambda ()
+            (load "dired-x")
+            (setq
+             dired-listing-switches "--group-directories-first -lhagG"
+             dired-omit-files
+             (concat
+              "^\\.?#\\|^\\.$\\|^\\.\\.$"
+              "\\|^Makefile\\(\\.am\\|\\.in\\)?$" ; automake
+              "\\|^configure\\(\\.ac\\|\\.in\\)?" ; autoconf
+              "\\|^missing$\\|^aclocal\\.m4$"     ; aclocal
+              "\\|^depcomp$\\|^install-sh$"
+              "\\|^autom4te\\.cache$"
+              "\\|^config\\.\\(status\\|log\\|h\\.in\\)$"
+              "\\|^stamp-h1$"
+              "\\|\\.fasl$"             ; common lisp
+              "\\|\\.cm.+$"             ; ocaml
+              "\\|^\\."
+              ))))
 
 (setq
  dired-guess-shell-alist-user
@@ -135,52 +147,104 @@
      " -sOutputFile=\"" (file-name-sans-extension file) "-.pdf\""))
   ))
 
-;; =============================== CC Mode ==============================
+;============================== CC Mode ==============================
 (add-hook 'c-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 (add-hook 'c++-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 (add-hook 'java-mode-hook
-	  (lambda ()
-	    (c-set-style "gnu")))
+          (lambda ()
+            (c-set-style "gnu")))
 
-;; =============================== Doxygen ==============================
+;============================== Doxygen ==============================
 (autoload 'doxymacs-mode "doxymacs" nil t)
 (add-hook 'c-mode-common-hook 'doxymacs-mode)
+;================================= Go ================================
+;; (require 'go-eldoc)
+;; (add-hook 'go-mode-hook 'go-eldoc-setup)
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
 
-;; ================================= Git ================================
+(defun my-go-mode-hook ()
+  ; Call Gofmt before saving
+  (setq gofmt-command "goimports")
+  (add-hook 'before-save-hook 'gofmt-before-save)
+  ; Godef jump key binding                                                      
+  (local-set-key (kbd "M-.") 'godef-jump-other-window)
+  (local-set-key (kbd "M-*") 'pop-tag-mark) )
+(add-hook 'go-mode-hook 'my-go-mode-hook)
+
+;================================ Git ================================
 (autoload 'magit-status "magit" nil t)
 
-;; ================================= Ido ================================
+;================================ Ido ================================
 (setq ido-separator "\n") ;;; make ido display choices vertically
 (setq ido-enable-flex-matching t) ;;; display any item that contains the chars you typed
-(ido-mode 1)
+(setq ido-mode 'buffer)
 
-;; ================================= Lua ================================
+;=============================== iedit ===============================
+(require 'iedit)
+
+;================================ Lua ================================
 (autoload 'lua-mode "lua-mode" nil t)
 (add-to-list 'interpreter-mode-alist '("lua" . lua-mode))
 
-;; ============================== Markdown ==============================
+;============================== Markdown =============================
 (autoload 'markdown-mode "markdown-mode" nil t)
 
-;; ================================ Muse ================================
+;================================ Muse ===============================
 (autoload 'muse-mode "muse-mode" nil t)
 (add-hook 'muse-mode-hook
-	  (lambda ()
-	    (load "muse-html.el" t t)
-	    (load "muse-latex.el" t t )
-	    (load "htmlize-hack.el" t t)))
+          (lambda ()
+            (load "muse-html.el" t t)
+            (load "muse-latex.el" t t )
+            (load "htmlize-hack.el" t t)))
 (add-hook 'muse-mode-hook 'footnote-mode)
 
-;; ================================= PHP ================================
+;========================== Multiple-Cursors =========================
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this)
+
+;============================== org-mode =============================
+(global-set-key (kbd "C-c l") #'org-store-link)
+(global-set-key (kbd "C-c a") #'org-agenda)
+(global-set-key (kbd "C-c c") #'org-capture)
+
+;================================ Nim ================================
+(add-hook 'nim-mode-init-hook
+          (lambda () (append
+                      '(
+                        ("^\\(?:> \\)?\\(.*?\\)(\\([0-9]+\\)\\(?:, \\([0-9]+\\)\\)?) \\(Error:\\)" 1 2 3)
+                        ("^Error: [^:]+: ?\\(.*?\\)(\\([0-9]+\\), \\([0-9]+\\))" 1 2 3)
+                        )
+                      compilation-error-regexp-alist)
+            (electric-pair-mode)))
+
+(add-hook 'nim-mode-init-hook
+          (lambda ()
+            (setq-local compile-command
+                        (concat "make -k "
+                                (if buffer-file-name
+                                    (shell-quote-argument
+                                     (concat (file-name-base buffer-file-name) ".exe")))))))
+
+;================================ PHP ================================
 (autoload 'php-mode "php-mode" nil t)
 
-;; ============================== Protobuf ==============================
+;=============================== Poporg ==============================
+(autoload 'poporg-dwim "poporg" nil t)
+(global-set-key (kbd "C-c \"") 'poporg-dwim)
+
+;============================== Protobuf =============================
 (autoload 'protobuf-mode "protobuf-mode" nil t)
 
-;; =============================== Python ===============================
+;=============================== Python ==============================
 (defvar python-mode-path
   (expand-file-name "python-mode.el-6.2.0/" emacs-site-lisp-path))
 (add-to-list 'load-path python-mode-path) 
@@ -200,8 +264,13 @@
 (require 'pymacs)
 (pymacs-load "ropemacs" "rope-")
 
-;; ===================== Scheme... Everything Scheme ====================
+;==================== Scheme... Everything Scheme ====================
 (load "quack.el" t t t)
+
+;================================= VC ================================
+;; Matikan VC, bikin lambat
+(eval-after-load "vc" '(remove-hook 'find-file-hooks 'vc-find-file-hook))
+(remove-hook 'find-file-hooks 'vc-find-file-hook)
 
 
 
@@ -242,8 +311,6 @@
  '(ls-lisp-dirs-first t)
  '(ls-lisp-ignore-case t)
  '(ls-lisp-verbosity nil)
- '(quack-default-program "gsi")
- '(quack-programs (quote ("gauche" "bigloo" "csi" "csi -hygienic" "gosh" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "mred -z" "mzscheme" "mzscheme -M errortrace" "mzscheme -b" "mzscheme -i" "petite" "rs" "scheme" "scheme48" "scm" "scsh" "sisc" "stklos" "sxi")))
  '(reftex-plug-into-AUCTeX t)
  '(rng-nxml-auto-validate-flag nil)
  '(safe-local-variable-values (quote ((noweb-doc-mode . nxml-mode) (noweb-doc-mode . markdown-mode) (noweb-doc-mode . doc-mode) (noweb-doc-mode . latex-mode) (noweb-code-mode . asm86-mode) (major-mode . c-mode) (dired-omit-mode . t) (dired-omit-files . "lexer.ml"))))
@@ -256,6 +323,7 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "black" :foreground "white" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 100 :width normal :foundry "unknown" :family "Envy Code R"))))
  '(cursor ((t (:background "white"))))
+ '(fixed-pitch ((t (:family "CourierPrime"))))
  '(fringe ((((class color) (background dark)) (:background "grey80" :foreground "black"))))
  '(mmm-code-submode-face ((t nil)))
  '(mmm-default-submode-face ((t (:background "gray10"))))
