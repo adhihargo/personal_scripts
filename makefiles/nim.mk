@@ -1,14 +1,19 @@
+NIMC_ARGS=--verbosity:0
+
 %.exe: %.nim
-	nim compile --verbosity:0 $<
+	nim compile $(NIMC_ARGS) $<
 
-run_%: %.nim
-	nim compile -r --verbosity:0 $<
+run_%.exe: %.nim
+	nim compile -r $(NIMC_ARGS) $<
+run_%: run_%.exe
 
-fmt_%: %.nim
+fmt_%.exe: %.nim
 	nimpretty $<
+fmt_%: fmt_%.exe
 
-doc_%: %.nim
+doc_%.exe: %.nim
 	nim doc $<
+doc_%: doc_%.exe
 
 fmtrun_%:
 	$(MAKE) fmt_$*
