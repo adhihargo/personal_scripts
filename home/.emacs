@@ -218,12 +218,14 @@
 
 ;================================ Nim ================================
 (add-hook 'nim-mode-init-hook
-          (lambda () (append
-                      '(
-                        ("^\\(?:> \\)?\\(.*?\\)(\\([0-9]+\\)\\(?:, \\([0-9]+\\)\\)?) \\(Error:\\)" 1 2 3)
-                        ("^Error: [^:]+: ?\\(.*?\\)(\\([0-9]+\\), \\([0-9]+\\))" 1 2 3)
-                        )
-                      compilation-error-regexp-alist)
+          (lambda () (setq
+                      compilation-error-regexp-alist
+                      (append
+                       '(
+                         ("^\\(?:> \\)?\\(.*?\\)(\\([0-9]+\\)\\(?:, \\([0-9]+\\)\\)?) \\(Error:\\)" 1 2 3)
+                         ("^Error: [^:]+: ?\\(.*?\\)(\\([0-9]+\\), \\([0-9]+\\))" 1 2 3)
+                         )
+                       compilation-error-regexp-alist))
             (electric-pair-mode)))
 
 (add-hook 'nim-mode-init-hook
